@@ -1,10 +1,26 @@
-from django.http import HttpResponse, HttpRequest
-from django.shortcuts import render
+from rest_framework import permissions
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateAPIView,
+    DestroyAPIView,
+)
+from rest_framework.viewsets import ModelViewSet
+
+from . import models
+from . import serializers
 
 
-def sayHello(request: HttpRequest):
-    return HttpResponse("Hello")
+class BookingViewSet(ModelViewSet):
+    queryset = models.Booking.objects.all()
+    serializer_class = serializers.BookingSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
-def index(request: HttpRequest):
-    return render(request, "index.html", {})
+class MenuItemsView(ListCreateAPIView):
+    queryset = models.Menu.objects.all()
+    serializer_class = serializers.MenuSerializer
+
+
+class SingleMenuItemView(RetrieveUpdateAPIView, DestroyAPIView):
+    queryset = models.Menu.objects.all()
+    serializer_class = serializers.MenuSerializer
