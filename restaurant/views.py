@@ -1,3 +1,5 @@
+from django.http import HttpRequest
+from django.shortcuts import render
 from rest_framework import permissions
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -24,3 +26,7 @@ class MenuItemsView(ListCreateAPIView):
 class SingleMenuItemView(RetrieveUpdateAPIView, DestroyAPIView):
     queryset = models.Menu.objects.all()
     serializer_class = serializers.MenuSerializer
+
+
+def home(request: HttpRequest):
+    return render(request, "index.html")
