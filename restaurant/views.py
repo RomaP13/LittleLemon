@@ -30,3 +30,12 @@ class SingleMenuItemView(RetrieveUpdateAPIView, DestroyAPIView):
 
 def home(request: HttpRequest):
     return render(request, "index.html")
+
+
+def about(request):
+    return render(request, "about.html")
+
+
+def menu(request):
+    context = {}
+    return render(request, "menu.html", context)

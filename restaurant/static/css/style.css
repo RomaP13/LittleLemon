@@ -50,7 +50,6 @@ nav {
     background-color: #495E57;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    margin-bottom: 0px;
 }
 
 nav ul {
@@ -230,11 +229,6 @@ footer p {
 	height: 100%;
 }
 
-.menu-price{
-    display: block;
-    font-size: 1rem;
-}
-
 @media (max-width: 800px) {
     section {
         flex-direction: column;   
@@ -253,3 +247,4 @@ footer p {
         width: 100%;
     }
   }
+
