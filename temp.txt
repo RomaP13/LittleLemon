@@ -1,0 +1,144 @@
+diff --git a/Pipfile b/Pipfile
+index 982be2d..9dba897 100644
+--- a/Pipfile
++++ b/Pipfile
+@@ -9,6 +9,7 @@ djangorestframework = "*"
+ mysqlclient = "*"
+ djoser = "*"
+ django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
++django-filter = "*"
+ 
+ [dev-packages]
+ 
+diff --git a/Pipfile.lock b/Pipfile.lock
+index 8ea73bb..4982d50 100644
+--- a/Pipfile.lock
++++ b/Pipfile.lock
+@@ -1,7 +1,7 @@
+ {
+     "_meta": {
+         "hash": {
+-            "sha256": "762a897c5201ee39f6cbeb2de3f59e71045e97de2f42fa0e11bfd5c9b505fb36"
++            "sha256": "b6a34a1b4b9fc02de45114b395bc10119717c0a507ff9ba4781645de2196692f"
+         },
+         "pipfile-spec": 6,
+         "requires": {
+@@ -234,12 +234,21 @@
+         },
+         "django": {
+             "hashes": [
+-                "sha256:56ab63a105e8bb06ee67381d7b65fe6774f057e41a8bab06c8020c8882d8ecd4",
+-                "sha256:b5bb1d11b2518a5f91372a282f24662f58f66749666b0a286ab057029f728080"
++                "sha256:5c7d748ad113a81b2d44750ccc41edc14e933f56581683db548c9257e078cc83",
++                "sha256:5fb37580dcf4a262f9258c1f4373819aacca906431f505e4688e37f3a99195df"
+             ],
+             "index": "pypi",
+             "markers": "python_version >= '3.10'",
+-            "version": "==5.0.2"
++            "version": "==5.0.3"
++        },
++        "django-filter": {
++            "hashes": [
++                "sha256:67583aa43b91fe8c49f74a832d95f4d8442be628fd4c6d65e9f811f5153a4e5c",
++                "sha256:99122a201d83860aef4fe77758b69dda913e874cc5e0eaa50a86b0b18d708400"
++            ],
++            "index": "pypi",
++            "markers": "python_version >= '3.7'",
++            "version": "==23.5"
+         },
+         "django-phonenumber-field": {
+             "extras": [
+diff --git a/api/views.py b/api/views.py
+index b8c0bc7..30fa6db 100644
+--- a/api/views.py
++++ b/api/views.py
+@@ -1,3 +1,4 @@
++from django_filters.rest_framework import DjangoFilterBackend
+ from rest_framework.generics import (
+     ListCreateAPIView,
+     RetrieveUpdateAPIView,
+@@ -13,6 +14,8 @@ from restaurant.serializers import BookingSerializer, MenuSerializer
+ class BookingViewSet(ModelViewSet):
+     queryset = Booking.objects.all()
+     serializer_class = BookingSerializer
++    filter_backends = [DjangoFilterBackend]
++    filterset_fields = ["reservation_date"]
+ 
+ 
+ class MenuItemsView(ListCreateAPIView):
+diff --git a/littlelemon/settings.py b/littlelemon/settings.py
+index c6724d2..4d2c9eb 100644
+--- a/littlelemon/settings.py
++++ b/littlelemon/settings.py
+@@ -37,6 +37,7 @@ INSTALLED_APPS = [
+     'django.contrib.sessions',
+     'django.contrib.messages',
+     'django.contrib.staticfiles',
++    'django_filters',
+     'restaurant',
+     'api',
+     'rest_framework',
+diff --git a/restaurant/static/js/booking.js b/restaurant/static/js/booking.js
+index 2d61390..921e5f3 100644
+--- a/restaurant/static/js/booking.js
++++ b/restaurant/static/js/booking.js
+@@ -16,7 +16,7 @@ function getBookings() {
+   const date = document.getElementById("id_reservation_date").value
+   document.getElementById("today").innerHTML = date
+   
+-  fetch(bookingsUrl + "?date=" + date)
++  fetch(bookingsUrl + "?reservation_date=" + date)
+     .then(r => r.json())
+     .then(data => {
+       reserved_slots = []
+@@ -26,7 +26,7 @@ function getBookings() {
+         bookings += `<p>${item.first_name} - ${formatTime(item.reservation_time)}</p>`
+       }
+ 
+-      slot_options = "<option value="0" disabled>Select time</option>"
++      slot_options = "<option value='0' disabled>Select time</option>"
+       for (i = 10; i <= 20; i++) {
+         const label = formatTime(i)
+         if (reserved_slots.includes(i)) {
+diff --git a/restaurant/templates/index.html b/restaurant/templates/index.html
+index b5284f9..ddd11f6 100644
+--- a/restaurant/templates/index.html
++++ b/restaurant/templates/index.html
+@@ -8,7 +8,7 @@
+       <p>
+         30% Off This Weekend 
+       </p>
+-      <a href="#" class="cta"> Book now </a>
++      <a href="{% url 'booking' %}" class="cta"> Book now </a>
+     </article>
+   </section>
+   <section>
+@@ -19,7 +19,7 @@
+         Our menu consists of 12-15 seasonal items based on Italian, Greek, and Turkish culture.
+       </p>
+       <p>
+-        <a href="#">See our new menu</a>
++      <a href="{% url 'menu' %}">See our new menu</a>
+       </p>
+     </article>
+     <article>
+@@ -29,7 +29,7 @@
+         Reserve your table for an Italian, Greek, and Turkish dining experience.
+       </p>
+       <p>
+-        <a href="#">Book your table now</a>
++        <a href="{% url 'booking' %}">Book your table now</a>
+       </p>
+     </article>
+     <article>
+diff --git a/restaurant/templates/partials/_header.html b/restaurant/templates/partials/_header.html
+index 1ff1daa..cede8f5 100644
+--- a/restaurant/templates/partials/_header.html
++++ b/restaurant/templates/partials/_header.html
+@@ -8,6 +8,5 @@
+     <li><a href="{% url 'about' %}">About</a></li>
+     <li><a href="{% url 'menu' %}">Menu</a></li>
+     <li><a href="{% url 'booking' %}">Book</a></li>
+-    <li><a href="#">Reservations</a></li>
+   </ul>
+ </nav>
