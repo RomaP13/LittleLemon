@@ -16,7 +16,7 @@ function getBookings() {
   const date = document.getElementById("id_reservation_date").value
   document.getElementById("today").innerHTML = date
   
-  fetch(bookingsUrl + "?date=" + date)
+  fetch(bookingsUrl + "?reservation_date=" + date)
     .then(r => r.json())
     .then(data => {
       reserved_slots = []
@@ -26,7 +26,7 @@ function getBookings() {
         bookings += `<p>${item.first_name} - ${formatTime(item.reservation_time)}</p>`
       }
 
-      slot_options = "<option value="0" disabled>Select time</option>"
+      slot_options = "<option value='0' disabled>Select time</option>"
       for (i = 10; i <= 20; i++) {
         const label = formatTime(i)
         if (reserved_slots.includes(i)) {
