@@ -10,6 +10,7 @@ mysqlclient = "*"
 djoser = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 django-filter = "*"
+pillow = "*"
 
 [dev-packages]
 

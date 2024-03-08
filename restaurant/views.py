@@ -1,7 +1,12 @@
-from django.shortcuts import render
+from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
+
+from django_filters.views import FilterView
+
+from .filters import MenuFilter
 from .forms import BookingForm
+from .models import Menu, Category
 
 
 class HomeView(TemplateView):
@@ -12,9 +17,27 @@ class AboutView(TemplateView):
     template_name = "about.html"
 
 
-def menu(request):
-    context = {}
-    return render(request, "menu.html", context)
+class MenuView(FilterView):
+    template_name = "menu.html"
+    context_object_name = "menu"
+    model = Menu
+    filterset_class = MenuFilter
+
+    def get_queryset(self):
+        return Menu.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = Category.objects.all()
+
+        return context
+
+
+class MenuItemView(DetailView):
+    template_name = "menu_item.html"
+    context_object_name = "menu_item"
+    model = Menu
+    pk_url_kwarg = "pk"
 
 
 class BookingView(CreateView):
