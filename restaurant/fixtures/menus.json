@@ -1,0 +1,156 @@
+[
+  {
+    "model": "restaurant.menu",
+    "pk": 1,
+    "fields": {
+      "title": "Greek salad",
+      "price": "8.99",
+      "menu_item_description": "A refreshing combination of crisp lettuce, juicy tomatoes, cucumber slices, red onions, tangy Kalamata olives, and creamy feta cheese, drizzled with extra virgin olive oil and sprinkled with oregano.",
+      "image": "menus_images/Greek_salad.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 2,
+    "fields": {
+      "title": "Pasta with tomato and basil",
+      "price": "12.99",
+      "menu_item_description": "Al dente pasta tossed in a savory tomato sauce infused with fragrant basil leaves, garnished with grated Parmesan cheese.",
+      "image": "menus_images/Pasta_with_tomato_and_basil.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 3,
+    "fields": {
+      "title": "Grilled fish",
+      "price": "14.99",
+      "menu_item_description": "Fresh fillet of fish seasoned with herbs and spices, grilled to perfection, served with a side of steamed vegetables.",
+      "image": "menus_images/Grilled_fish.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 4,
+    "fields": {
+      "title": "Mediterranean salad",
+      "price": "10.50",
+      "menu_item_description": "A vibrant mix of fresh lettuce, diced tomatoes, cucumber slices, red onions, black olives, and crumbled feta cheese, tossed in a zesty Mediterranean dressing.",
+      "image": "menus_images/Mediterranean_salad.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 5,
+    "fields": {
+      "title": "Lemon dessert",
+      "price": "7.99",
+      "menu_item_description": "A luscious lemon cake with a moist and tender crumb, infused with tangy lemon flavor and topped with a sweet lemon glaze for the perfect balance of sweet and sour.",
+      "image": "menus_images/Lemon_dessert.jpg",
+      "category": 2
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 6,
+    "fields": {
+      "title": "Bruschetta",
+      "price": "7.00",
+      "menu_item_description": "Crispy slices of toasted baguette topped with a flavorful mixture of diced ripe tomatoes, fresh basil, garlic, and extra virgin olive oil, finished with a sprinkle of balsamic glaze for a classic Italian appetizer.",
+      "image": "menus_images/Bruschetta.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 7,
+    "fields": {
+      "title": "Pancake with sliced strawberry",
+      "price": "5.50",
+      "menu_item_description": "Fluffy pancakes served with a generous portion of fresh strawberries sliced on top, drizzled with maple syrup for a delightful breakfast or dessert option.",
+      "image": "menus_images/Pancake_with_sliced_strawberry.jpg",
+      "category": 3
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 8,
+    "fields": {
+      "title": "Fish salad",
+      "price": "14.00",
+      "menu_item_description": "A light and healthy salad featuring flaky pieces of grilled fish on a bed of mixed greens, cherry tomatoes, cucumbers, and avocado slices, dressed with a zesty vinaigrette.",
+      "image": "menus_images/Fish_salad.jpg",
+      "category": 1
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 9,
+    "fields": {
+      "title": "Raspberry cake",
+      "price": "4.50",
+      "menu_item_description": "Indulge in the decadent flavors of this moist and flavorful cake, filled with layers of rich raspberry filling and adorned with crunchy pistachio nuts, topped with fresh raspberries for a delightful contrast of textures and tastes.",
+      "image": "menus_images/Raspberry_cake.jpg",
+      "category": 2
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 10,
+    "fields": {
+      "title": "Toast bread with blueberry",
+      "price": "5.75",
+      "menu_item_description": "Slices of toasted bread served with a generous spread of blueberry jam, perfect for a simple yet satisfying breakfast or snack option.",
+      "image": "menus_images/Toast_bread_with_blueberry.jpg",
+      "category": 3
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 11,
+    "fields": {
+      "title": "Waffle with sliced strawberries and blueberries",
+      "price": "11.99",
+      "menu_item_description": "Golden, fluffy waffles topped with a vibrant medley of sliced strawberries and blueberries, drizzled with maple syrup for a sweet and satisfying breakfast treat. This breakfast also includes a side of fresh apricots, adding a touch of sweetness and tartness to complement the waffles and fruit topping.",
+      "image": "menus_images/Waffle_with_sliced_strawberries_and_blueberries.jpg",
+      "category": 3
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 12,
+    "fields": {
+      "title": "Brownie",
+      "price": "3.50",
+      "menu_item_description": "Rich and decadent, our classic brownie is baked to perfection with a fudgy texture and intense chocolate flavor, making it the ultimate indulgence for any sweet tooth.",
+      "image": "menus_images/Brownie.jpg",
+      "category": 2
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 13,
+    "fields": {
+      "title": "Cheesecake",
+      "price": "5.00",
+      "menu_item_description": "Creamy and velvety, our cheesecake features a buttery graham cracker crust topped with a smooth and decadent cream cheese filling, offering a delightful balance of tangy sweetness in every bite.",
+      "image": "menus_images/Cheesecake.jpg",
+      "category": 2
+    }
+  },
+  {
+    "model": "restaurant.menu",
+    "pk": 14,
+    "fields": {
+      "title": "Ice cream with berries and jam",
+      "price": "6.99",
+      "menu_item_description": "Indulge in a refreshing treat with our creamy vanilla ice cream, topped with a medley of fresh berries and a dollop of sweet jam, creating a harmonious blend of fruity flavors and creamy texture that's perfect for satisfying your sweet cravings.",
+      "image": "menus_images/Ice_cream_with_berries_and_jam.jpg",
+      "category": 2
+    }
+  }
+]

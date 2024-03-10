@@ -15,31 +15,44 @@
 <nav class="category">
   <ul>
     {% for name in category %}
-    <li><a href="#">{{ name }}</a></li>
+    <li><a href="{% url 'menu' %}?category={{ name.id }}">{{ name }}</a></li>
     {% endfor %}
   </ul>
 </nav>
 {% for item in menu %}
 <div class="responsive">
     <div class="gallery">
-        <a target="_blank" href="#">
-          <img class="menu-image" src={{ item.image }} alt={{ item.name }} width="600" height="400">
+      <a target="_blank" href="{% url 'menu_item' pk=item.pk %}">
+          <img class="menu-image" src={{ item.image.url }} alt={{ item.title }} width="600" height="400">
         </a>
-        <div class="menu-name">{{ item.name }}</div>
+        <div class="menu-name">{{ item.title }}</div>
         <div class="menu-price">
             ${{ item.price }}
         </div>
     </div>
 </div>
 {% endfor %}
+
 <div class="pagination">
-  <a href="#">&laquo;</a>
-  <a href="#">1</a>
-  <a class="active" href="#">2</a>
-  <a href="#">3</a>
-  <a href="#">4</a>
-  <a href="#">5</a>
-  <a href="#">6</a>
-  <a href="#">&raquo;</a>
+    {% if menu.has_previous %}
+        <a href="?category={{ request.GET.category|default:'' }}&page={{ menu.previous_page_number }}">«</a>
+    {% else %}
+        <a class="disabled">«</a>
+    {% endif %}
+
+    {% for i in menu.paginator.page_range %}
+        {% if menu.number == i %}
+            <a class="active" href="?category={{ request.GET.category|default:'' }}&page={{ i }}">{{ i }}</a>
+        {% else %}
+            <a href="?category={{ request.GET.category|default:'' }}&page={{ i }}">{{ i }}</a>
+        {% endif %}
+    {% endfor %}
+
+    {% if menu.has_next %}
+        <a href="?category={{ request.GET.category|default:'' }}&page={{ menu.next_page_number }}">»</a>
+    {% else %}
+        <a class="disabled">»</a>
+    {% endif %}
 </div>
+
 {% endblock %}

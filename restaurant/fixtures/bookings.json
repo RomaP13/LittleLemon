@@ -1,0 +1,122 @@
+[
+  {
+    "model": "restaurant.booking",
+    "pk": 1,
+    "fields": {
+      "first_name": "Olly",
+      "last_name": "Knaggs",
+      "email": "oknaggs0@a8.net",
+      "phone_number": "+380444832222",
+      "reservation_date": "2024-03-08",
+      "reservation_time": 20
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 2,
+    "fields": {
+      "first_name": "Tara",
+      "last_name": "Antoni",
+      "email": "tantoni1@digg.com",
+      "phone_number": "+380503767043",
+      "reservation_date": "2024-03-07",
+      "reservation_time": 13
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 3,
+    "fields": {
+      "first_name": "Tressa",
+      "last_name": "Mitford",
+      "email": "tmitford2@wikipedia.org",
+      "phone_number": "+380631591711",
+      "reservation_date": "2024-03-05",
+      "reservation_time": 15
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 4,
+    "fields": {
+      "first_name": "Krissy",
+      "last_name": "Beardshaw",
+      "email": "kbeardshaw7@goo.gl",
+      "phone_number": "+380735551550",
+      "reservation_date": "2024-03-08",
+      "reservation_time": 18
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 5,
+    "fields": {
+      "first_name": "Natalina",
+      "last_name": "Umpleby",
+      "email": "numplebyb@mapquest.com",
+      "phone_number": "+380948181227",
+      "reservation_date": "2024-03-17",
+      "reservation_time": 14
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 6,
+    "fields": {
+      "first_name": "Sinclare",
+      "last_name": "Skettles",
+      "email": "sskettlesk@dropbox.com",
+      "phone_number": "+380694736617",
+      "reservation_date": "2024-03-13",
+      "reservation_time": 15
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 7,
+    "fields": {
+      "first_name": "Fletch",
+      "last_name": "Priestman",
+      "email": "fpriestmanm@livejournal.com",
+      "phone_number": "+380335316578",
+      "reservation_date": "2024-03-28",
+      "reservation_time": 7
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 8,
+    "fields": {
+      "first_name": "Thomasine",
+      "last_name": "Joyce",
+      "email": "tjoycet@boston.com",
+      "phone_number": "+380411910440",
+      "reservation_date": "2024-03-03",
+      "reservation_time": 11
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 9,
+    "fields": {
+      "first_name": "Pammie",
+      "last_name": "Maddigan",
+      "email": "pmaddigan11@amazon.com",
+      "phone_number": "+380694736617",
+      "reservation_date": "2024-02-29",
+      "reservation_time": 1
+    }
+  },
+  {
+    "model": "restaurant.booking",
+    "pk": 10,
+    "fields": {
+      "first_name": "Vivyan",
+      "last_name": "Seiter",
+      "email": "vseiter1c@google.com.au",
+      "phone_number": "+380460678624",
+      "reservation_date": "2024-02-17",
+      "reservation_time": 6
+    }
+  }
+]
