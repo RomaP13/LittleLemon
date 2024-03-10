@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
@@ -22,13 +23,26 @@ class MenuView(FilterView):
     context_object_name = "menu"
     model = Menu
     filterset_class = MenuFilter
+    paginate_by = 4
 
     def get_queryset(self):
-        return Menu.objects.all()
+        # Add ordering to avoid UnorderedObjectListWarning
+        return Menu.objects.all().order_by("id")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["category"] = Category.objects.all()
+        page = self.request.GET.get("page", 1)
+        paginator = Paginator(self.object_list, self.paginate_by)
+
+        try:
+            menu = paginator.page(page)
+        except PageNotAnInteger:
+            menu = paginator.page(1)
+        except EmptyPage:
+            menu = paginator.page(paginator.num_pages)
+
+        context["menu"] = menu
 
         return context
 
