@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -82,25 +82,14 @@ WSGI_APPLICATION = 'littlelemon.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': config('MYSQL_DATABASE'),
-#         'USER': config('MYSQL_USER'),
-#         'PASSWORD': config('MYSQL_PASSWORD'),
-#         'HOST': config('DB_HOST', 'db'),  # Use 'db' as default from .env
-#         'PORT': config('DB_PORT', '3306'),  # Use '3306' as default from .env
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django-app-db',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'db',
-        'PORT': '3306',
+        'ENGINE': config('MYSQL_ENGINE', default='django.db.backends.mysql'),
+        'NAME': config('MYSQL_DATABASE'),
+        'USER': config('MYSQL_USER'),
+        'PASSWORD': config('MYSQL_PASSWORD'),
+        'HOST': config('MYSQL_HOST', 'db'),
+        'PORT': config('MYSQL_PORT', '3306'),
     }
 }
 
