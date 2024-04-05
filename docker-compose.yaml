@@ -29,3 +29,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+  redis:
+    image: redis:7.2.4-alpine
+    expose:
+      - 6379

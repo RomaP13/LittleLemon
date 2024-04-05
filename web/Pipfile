@@ -12,8 +12,10 @@ djoser = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 django-filter = "*"
 pillow = "*"
+django-redis = "*"
 
 [dev-packages]
+django-debug-toolbar = "*"
 
 [requires]
 python_version = "3.10"

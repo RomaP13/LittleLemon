@@ -12,7 +12,10 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y default-mysql-client
 RUN pip install pipenv
 COPY Pipfile Pipfile.lock ./
-RUN pipenv install --system --deploy
+
+# Use a build argument to determine whether to install dev dependencies
+ARG DEV
+RUN if [ "$DEV" = "true" ] ; then pipenv install --system --deploy --dev ; else pipenv install --system --deploy ; fi
 
 COPY . .
 COPY .env .env

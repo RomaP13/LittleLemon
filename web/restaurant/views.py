@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
@@ -26,12 +27,25 @@ class MenuView(FilterView):
     paginate_by = 4
 
     def get_queryset(self):
-        # Add ordering to avoid UnorderedObjectListWarning
-        return Menu.objects.all().order_by("id")
+        menu = cache.get("menu")
+
+        if not menu:
+            print("hit the db")
+            menu = Menu.objects.select_related("category").all().order_by("id")
+            cache.set("menu", menu)
+
+        return menu
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["category"] = Category.objects.all()
+        category = cache.get("category")
+
+        if not category:
+            print("hit the db")
+            category = Category.objects.all()
+            cache.set("category", category)
+
+        context["category"] = category
         page = self.request.GET.get("page", 1)
         paginator = Paginator(self.object_list, self.paginate_by)
 
@@ -52,6 +66,17 @@ class MenuItemView(DetailView):
     context_object_name = "menu_item"
     model = Menu
     pk_url_kwarg = "pk"
+
+    def get_object(self):
+        menu_item_id = self.kwargs.get(self.pk_url_kwarg)
+        menu_item = cache.get(f"menu_item_{menu_item_id}")
+
+        if not menu_item:
+            print("hit the db")
+            menu_item = super().get_object()
+            cache.set(f"menu_item_{menu_item_id}", menu_item)
+
+        return menu_item
 
 
 class BookingView(CreateView):
