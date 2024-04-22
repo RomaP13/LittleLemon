@@ -1,14 +1,13 @@
 from django.core.cache import cache
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
-
 from django_filters.views import FilterView
 
 from .filters import MenuFilter
 from .forms import BookingForm
-from .models import Menu, Category
+from .models import Category, Menu
 
 
 class HomeView(TemplateView):
@@ -30,7 +29,6 @@ class MenuView(FilterView):
         menu = cache.get("menu")
 
         if not menu:
-            print("hit the db")
             menu = Menu.objects.select_related("category").all().order_by("id")
             cache.set("menu", menu)
 
@@ -41,7 +39,6 @@ class MenuView(FilterView):
         category = cache.get("category")
 
         if not category:
-            print("hit the db")
             category = Category.objects.all()
             cache.set("category", category)
 
@@ -72,7 +69,6 @@ class MenuItemView(DetailView):
         menu_item = cache.get(f"menu_item_{menu_item_id}")
 
         if not menu_item:
-            print("hit the db")
             menu_item = super().get_object()
             cache.set(f"menu_item_{menu_item_id}", menu_item)
 

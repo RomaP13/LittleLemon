@@ -8,7 +8,6 @@ python-decouple = "*"
 django = "*"
 djangorestframework = "*"
 mysqlclient = "*"
-djoser = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 django-filter = "*"
 pillow = "*"
@@ -16,6 +15,7 @@ django-redis = "*"
 
 [dev-packages]
 django-debug-toolbar = "*"
+django-stubs = "*"
 
 [requires]
 python_version = "3.10"
