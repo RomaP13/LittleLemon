@@ -7,6 +7,9 @@ build_dev:
 up:
 	docker-compose up
 
+down:
+	docker-compose down
+
 make_migr:
 	docker-compose run --rm web sh -c "python manage.py makemigrations restaurant"
 
