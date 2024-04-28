@@ -1,5 +1,5 @@
 from django.core.cache import cache
-from restaurant.models import Booking, Menu
+from restaurant.models import Booking, Category, Menu
 
 MENU_CACHE_KEY = "menu"
 
@@ -31,3 +31,25 @@ def create_booking(**kwargs):
     defaults.update(kwargs)
 
     return Booking(**defaults)
+
+
+def create_category(**kwargs):
+    defaults = {
+        "title": "Soups",
+    }
+
+    defaults.update(kwargs)
+
+    return Category(**defaults)
+
+
+def create_menu(**kwargs):
+    defaults = {
+        "title": "Pozole",
+        "price": "10.99",
+        "category": "",
+    }
+
+    defaults.update(kwargs)
+
+    return Menu(**defaults)

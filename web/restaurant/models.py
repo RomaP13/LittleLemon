@@ -1,4 +1,4 @@
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -22,7 +22,7 @@ class Booking(models.Model):
 
 
 class Category(models.Model):
-    title = models.CharField(max_length=100, blank=False)
+    title = models.CharField(max_length=100, null=False, blank=False)
 
     class Meta:
         verbose_name = "category"
@@ -35,8 +35,11 @@ class Category(models.Model):
 class Menu(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)
     price = models.DecimalField(max_digits=10, decimal_places=2,
-                                null=False, blank=False)
-    menu_item_description = models.TextField(max_length=1000, default='')
+                                null=False, blank=False,
+                                validators=[MinValueValidator(1),
+                                            MaxValueValidator(1000)])
+    menu_item_description = models.TextField(max_length=1000, default='',
+                                             null=True, blank=True)
     image = models.ImageField(upload_to="menus_images", null=True, blank=True)
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
 
