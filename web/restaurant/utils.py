@@ -1,4 +1,5 @@
 from django.core.cache import cache
+from django.core.exceptions import ValidationError
 from restaurant.models import Booking, Category, Menu
 
 MENU_CACHE_KEY = "menu"
@@ -37,19 +38,25 @@ def create_category(**kwargs):
     defaults = {
         "title": "Soups",
     }
-
     defaults.update(kwargs)
-
-    return Category(**defaults)
+    category = Category(**defaults)
+    category.save()
+    return category
 
 
 def create_menu(**kwargs):
     defaults = {
         "title": "Pozole",
         "price": "10.99",
-        "category": "",
+        "category": None,
     }
 
     defaults.update(kwargs)
-
-    return Menu(**defaults)
+    menu = Menu(**defaults)
+    try:
+        menu.full_clean()  # Validate the model instance
+        menu.save()  # Save only if validation passes
+    except ValidationError as e:
+        # Handle the ValidationError if needed
+        raise e
+    return menu
