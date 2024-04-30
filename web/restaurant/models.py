@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -36,8 +38,8 @@ class Menu(models.Model):
     title = models.CharField(max_length=100, null=False, blank=False)
     price = models.DecimalField(max_digits=10, decimal_places=2,
                                 null=False, blank=False,
-                                validators=[MinValueValidator(1),
-                                            MaxValueValidator(1000)])
+                                validators=[MinValueValidator(Decimal("1")),
+                                            MaxValueValidator(Decimal("1000"))])
     menu_item_description = models.TextField(max_length=1000, default='',
                                              null=True, blank=True)
     image = models.ImageField(upload_to="menus_images", null=True, blank=True)
