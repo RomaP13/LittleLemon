@@ -9,11 +9,11 @@ from restaurant.utils import (cache_menu, create_category, create_menu,
 class TestCacheSystem(TestCase):
 
     @classmethod
-    def setUpTestData(self):
-        self.category_1 = create_category(title="Main")
-        self.category_2 = create_category(title="Breakfasts")
-        categories = [self.category_1, self.category_2]
-        self.menu = []
+    def setUpTestData(cls):
+        cls.category_1 = create_category(title="Main")
+        cls.category_2 = create_category(title="Breakfasts")
+        categories = [cls.category_1, cls.category_2]
+        cls.menu = []
         fixed_price = Decimal("0.99")
 
         for i in range(1, 999):
@@ -22,7 +22,7 @@ class TestCacheSystem(TestCase):
                 price=Decimal(i + fixed_price),
                 category=random.choice(categories)
             )
-            self.menu.append(menu_item)
+            cls.menu.append(menu_item)
 
     def test_cached_menu(self):
         initial_menu_ids = [m.id for m in self.menu]

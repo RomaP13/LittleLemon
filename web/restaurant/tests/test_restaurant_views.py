@@ -1,12 +1,15 @@
-from django.test import Client, TestCase
+from decimal import Decimal
+
+from django.test import Client, TestCase, SimpleTestCase
 from django.urls import reverse
 from rest_framework import status
 
 from restaurant.forms import BookingForm
 from restaurant.models import Booking
+from restaurant.utils import create_category, create_menu
 
 
-class HomeAboutViewTest(TestCase):
+class HomeAboutViewTest(SimpleTestCase):
     def setUp(self):
         self.client = Client()
 
@@ -28,7 +31,7 @@ class BookingViewTest(TestCase):
 
     def test_booking_view_get(self):
         response = self.client.get(self.booking)
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTemplateUsed(response, "booking.html")
         self.assertIsInstance(response.context["form"], BookingForm)
 
@@ -48,3 +51,37 @@ class BookingViewTest(TestCase):
 
         # Check if the booking was created
         self.assertEqual(Booking.objects.count(), 1)
+
+
+class MenuViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.menu = reverse("restaurant:menu")
+
+    @classmethod
+    def setUpTestData(cls):
+        category1 = create_category()
+        category2 = create_category(title="Appetizers")
+        for i in range(1, 11):
+            create_menu(title=f"Soup {i}",
+                        price=Decimal(str(i) + "0.99"),
+                        category=category1)
+
+        for i in range(1, 4):
+            create_menu(title=f"Appetizer {i}",
+                        price=Decimal(str(i) + "0.99"),
+                        category=category2)
+
+    def test_menu_view_pagination(self):
+        response = self.client.get(self.menu)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTemplateUsed(response, "menu.html")
+        self.assertIn("menu", response.context)
+        self.assertIn("category", response.context)
+        self.assertEqual(len(response.context["menu"]), 4)
+
+    def test_menu_view_filtering(self):
+        client = Client()
+        # Test that we get 3 appetizers using filtering
+        response = client.get(self.menu + "?category=2")
+        self.assertEqual(len(response.context["menu"]), 3)

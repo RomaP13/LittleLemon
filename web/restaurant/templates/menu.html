@@ -23,7 +23,12 @@
 <div class="responsive">
     <div class="gallery">
       <a target="_blank" href="{% url 'restaurant:menu_item' pk=item.pk %}">
+        {% if item.image %}
           <img class="menu-image" src={{ item.image.url }} alt={{ item.title }} width="600" height="400">
+        {% else %}
+    <!-- Display a menu title if no image is provided -->
+          <img src="" alt={{ item.title }}>
+        {% endif %}
         </a>
         <div class="menu-name">{{ item.title }}</div>
         <div class="menu-price">
