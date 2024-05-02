@@ -81,7 +81,24 @@ class MenuViewTest(TestCase):
         self.assertEqual(len(response.context["menu"]), 4)
 
     def test_menu_view_filtering(self):
-        client = Client()
         # Test that we get 3 appetizers using filtering
-        response = client.get(self.menu + "?category=2")
+        response = self.client.get(self.menu + "?category=2")
+        print(response.context["menu"])
         self.assertEqual(len(response.context["menu"]), 3)
+
+
+class MenuItemViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+
+    @classmethod
+    def setUpTestData(cls):
+        category = create_category()
+        cls.menu_item = create_menu(category=category)
+
+    def test_menu_item_view(self):
+        response = self.client.get(reverse("restaurant:menu_item",
+                                           args=[self.menu_item.pk]))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertTemplateUsed(response, "menu_item.html")
+        self.assertEqual(response.context["menu_item"], self.menu_item)
