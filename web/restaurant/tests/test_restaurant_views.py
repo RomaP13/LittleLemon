@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.core.cache import cache
 from django.test import Client, TestCase, SimpleTestCase
 from django.urls import reverse
 from rest_framework import status
@@ -57,20 +58,21 @@ class MenuViewTest(TestCase):
     def setUp(self):
         self.client = Client()
         self.menu = reverse("restaurant:menu")
+        cache.clear()
 
     @classmethod
     def setUpTestData(cls):
-        category1 = create_category()
-        category2 = create_category(title="Appetizers")
+        cls.category1 = create_category()
+        cls.category2 = create_category(title="Appetizers")
         for i in range(1, 11):
             create_menu(title=f"Soup {i}",
                         price=Decimal(str(i) + "0.99"),
-                        category=category1)
+                        category=cls.category1)
 
         for i in range(1, 4):
             create_menu(title=f"Appetizer {i}",
                         price=Decimal(str(i) + "0.99"),
-                        category=category2)
+                        category=cls.category2)
 
     def test_menu_view_pagination(self):
         response = self.client.get(self.menu)
@@ -82,8 +84,8 @@ class MenuViewTest(TestCase):
 
     def test_menu_view_filtering(self):
         # Test that we get 3 appetizers using filtering
-        response = self.client.get(self.menu + "?category=2")
-        print(response.context["menu"])
+        response = self.client.get(
+            self.menu + "?category=" + str(self.category2.id))
         self.assertEqual(len(response.context["menu"]), 3)
 
 

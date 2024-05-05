@@ -26,13 +26,14 @@ class MenuView(FilterView):
     paginate_by = 4
 
     def get_queryset(self):
-        menu = cache.get("menu")
+        menu_ids = cache.get("menu_ids")
 
-        if not menu:
+        if not menu_ids:
             menu = Menu.objects.select_related("category").all().order_by("id")
-            cache.set("menu", menu)
+            menu_ids = list(menu.values_list("id", flat=True))
+            cache.set("menu_ids", menu_ids)
 
-        return menu
+        return Menu.objects.filter(id__in=menu_ids).order_by("id")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
