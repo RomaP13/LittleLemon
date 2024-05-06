@@ -12,5 +12,5 @@ class CategoryModelTest(TestCase):
 
     # Test the menu with blank title
     def test_invalid_title(self):
-        category_invalid_title = create_category(title="")
-        self.assertRaises(ValidationError, category_invalid_title.full_clean)
+        with self.assertRaises(ValidationError):
+            create_category(title="")

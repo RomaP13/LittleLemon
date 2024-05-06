@@ -30,8 +30,15 @@ def create_booking(**kwargs):
     }
 
     defaults.update(kwargs)
+    booking = Booking(**defaults)
 
-    return Booking(**defaults)
+    # Validate the model instance
+    try:
+        booking.full_clean()
+        booking.save()
+    except ValidationError as e:
+        raise e
+    return booking
 
 
 def create_category(**kwargs):
@@ -40,7 +47,13 @@ def create_category(**kwargs):
     }
     defaults.update(kwargs)
     category = Category(**defaults)
-    category.save()
+
+    # Validate the model instance
+    try:
+        category.full_clean()
+        category.save()
+    except ValidationError as e:
+        raise e
     return category
 
 
@@ -53,10 +66,11 @@ def create_menu(**kwargs):
 
     defaults.update(kwargs)
     menu = Menu(**defaults)
+
+    # Validate the model instance
     try:
-        menu.full_clean()  # Validate the model instance
-        menu.save()  # Save only if validation passes
+        menu.full_clean()
+        menu.save()
     except ValidationError as e:
-        # Handle the ValidationError if needed
         raise e
     return menu
