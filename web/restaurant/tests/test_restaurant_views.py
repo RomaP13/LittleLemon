@@ -11,6 +11,7 @@ from restaurant.utils import create_category, create_menu
 
 
 class HomeAboutViewTest(SimpleTestCase):
+
     def setUp(self):
         self.client = Client()
 
@@ -26,6 +27,7 @@ class HomeAboutViewTest(SimpleTestCase):
 
 
 class BookingViewTest(TestCase):
+
     def setUp(self):
         self.client = Client()
         self.booking = reverse("restaurant:booking")
@@ -55,6 +57,7 @@ class BookingViewTest(TestCase):
 
 
 class MenuViewTest(TestCase):
+
     def setUp(self):
         self.client = Client()
         self.menu = reverse("restaurant:menu")
@@ -83,13 +86,14 @@ class MenuViewTest(TestCase):
         self.assertEqual(len(response.context["menu"]), 4)
 
     def test_menu_view_filtering(self):
-        # Test that we get 3 appetizers using filtering
+        """Test that we get 3 appetizers using filtering"""
         response = self.client.get(
             self.menu + "?category=" + str(self.category2.id))
         self.assertEqual(len(response.context["menu"]), 3)
 
 
 class MenuItemViewTest(TestCase):
+
     def setUp(self):
         self.client = Client()
 
