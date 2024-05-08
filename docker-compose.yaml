@@ -9,10 +9,14 @@ services:
       - 8000:8000
     image: app:django
     container_name: django_container
-    command: "python manage.py runserver 0.0.0.0:8000"
+    command: >
+      sh -c "python manage.py clear_cache && 
+             python manage.py runserver 0.0.0.0:8000"
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_started
     env_file:
       - .env
   db:
@@ -33,3 +37,12 @@ services:
     image: redis:7.2.4-alpine
     expose:
       - 6379
+  phpmyadmin:
+    image: phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+    ports:
+      - "8080:80"
+    depends_on:
+      - db

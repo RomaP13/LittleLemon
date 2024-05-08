@@ -1,14 +1,13 @@
 from django.core.cache import cache
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.views.generic import DetailView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
-
 from django_filters.views import FilterView
 
 from .filters import MenuFilter
 from .forms import BookingForm
-from .models import Menu, Category
+from .models import Category, Menu
 
 
 class HomeView(TemplateView):
@@ -27,21 +26,20 @@ class MenuView(FilterView):
     paginate_by = 4
 
     def get_queryset(self):
-        menu = cache.get("menu")
+        menu_ids = cache.get("menu_ids")
 
-        if not menu:
-            print("hit the db")
+        if not menu_ids:
             menu = Menu.objects.select_related("category").all().order_by("id")
-            cache.set("menu", menu)
+            menu_ids = list(menu.values_list("id", flat=True))
+            cache.set("menu_ids", menu_ids)
 
-        return menu
+        return Menu.objects.filter(id__in=menu_ids).order_by("id")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         category = cache.get("category")
 
         if not category:
-            print("hit the db")
             category = Category.objects.all()
             cache.set("category", category)
 
@@ -72,7 +70,6 @@ class MenuItemView(DetailView):
         menu_item = cache.get(f"menu_item_{menu_item_id}")
 
         if not menu_item:
-            print("hit the db")
             menu_item = super().get_object()
             cache.set(f"menu_item_{menu_item_id}", menu_item)
 

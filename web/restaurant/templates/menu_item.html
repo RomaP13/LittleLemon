@@ -5,8 +5,8 @@
    <article>
       <h1>Menu item</h1>
       <span>
-         <a href="{% url 'home' %}">Home</a> /
-         <a href="{% url 'menu' %}">Menu</a>/
+         <a href="{% url 'restaurant:home' %}">Home</a> /
+         <a href="{% url 'restaurant:menu' %}">Menu</a>/
          {{menu_item.title}}
       </span>
       <div class="row">
@@ -25,7 +25,12 @@
             </p>
          </div>
          <div class="column">
-        <img src="{{ menu_item.image.url }}" alt="{{ menu_item.title}}" />
+        {% if menu_item.image %}
+          <img src={{ menu_item.image.url }} alt={{ menu_item.title }} />
+        {% else %}
+          <!-- Display a menu title if no image is provided -->
+          <img src="" alt={{ menu_item.title }}>
+        {% endif %}
         </div>
       </div>
    </article>

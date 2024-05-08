@@ -2,7 +2,7 @@
 FROM python:3.10 as builder
 
 # Set environment variables
-#ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set work directory
@@ -18,6 +18,5 @@ ARG DEV
 RUN if [ "$DEV" = "true" ] ; then pipenv install --system --deploy --dev ; else pipenv install --system --deploy ; fi
 
 COPY . .
-COPY .env .env
 
 CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000" ]
