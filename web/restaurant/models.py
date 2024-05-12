@@ -42,7 +42,7 @@ class Menu(models.Model):
                                             MaxValueValidator(Decimal("1000"))])
     menu_item_description = models.TextField(max_length=1000, default='',
                                              null=True, blank=True)
-    image = models.ImageField(upload_to="menus_images", null=True, blank=True)
+    image = models.ImageField(upload_to="menu_items", null=True, blank=True)
     category = models.ForeignKey(to=Category, on_delete=models.CASCADE)
 
     class Meta:
